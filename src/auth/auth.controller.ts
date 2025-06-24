@@ -12,7 +12,7 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post('signin')
+  @Post('login')
   signIn(@Body() signInDto: { email: string; password: string }) {
     return this.authService.signIn(signInDto);
   }

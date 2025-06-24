@@ -8,7 +8,6 @@ import {
   Delete,
   UseGuards,
   Req,
-  ParseUUIDPipe,
 } from '@nestjs/common';
 import { ReceiptsService } from './receipts.service';
 import { CreateReceiptDto } from './dtos/create-receipt.dto';
@@ -35,14 +34,14 @@ export class ReceiptsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseUUIDPipe) id: string, @Req() req: Request) {
+  findOne(@Param('id') id: string, @Req() req: Request) {
     const user = req.user as User;
     return this.receiptsService.findOne(id, user.id);
   }
 
   @Patch(':id')
   update(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id') id: string,
     @Body() updateReceiptDto: UpdateReceiptDto,
     @Req() req: Request,
   ) {
@@ -51,7 +50,7 @@ export class ReceiptsController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseUUIDPipe) id: string, @Req() req: Request) {
+  remove(@Param('id') id: string, @Req() req: Request) {
     const user = req.user as User;
     return this.receiptsService.remove(id, user.id);
   }

@@ -25,6 +25,7 @@ export class ReceiptsService {
     return this.prisma.receipt.create({
       data: {
         ...rest,
+        date: createReceiptDto.date ? new Date(createReceiptDto.date) : undefined,
         user_id: userId,
         customer_id: customer_id,
       },

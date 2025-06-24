@@ -3,11 +3,11 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   UseGuards,
   ParseUUIDPipe,
+  Put,
 } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dtos/create-customer.dto';
@@ -30,20 +30,20 @@ export class CustomersController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
+  findOne(@Param('id') id: string) {
     return this.customersService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id') id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
   ) {
     return this.customersService.update(id, updateCustomerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseUUIDPipe) id: string) {
+  remove(@Param('id') id: string) {
     return this.customersService.remove(id);
   }
 }
