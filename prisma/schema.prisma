@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  name       String?
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  receipts   Receipt[]
+
+  @@map("users")
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  cpf       String    @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  receipts  Receipt[]
+
+  @@map("customers")
+}
+
+model Receipt {
+  id            String   @id @default(cuid())
+  value         Float
+  description   String
+  service_type  String
+  payment_type  String
+  date          DateTime @default(now())
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  user_id       String
+  user          User     @relation(fields: [user_id], references: [id])
+
+  customer_id   String
+  customer      Customer @relation(fields: [customer_id], references: [id])
+
+  @@map("receipts")
+}
+
